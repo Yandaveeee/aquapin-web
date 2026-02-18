@@ -1,9 +1,20 @@
 import axios from 'axios';
 
-// Dynamic Base URL (can be set in localStorage for flexibility)
+// Dynamic Base URL
 const getBaseUrl = () => {
-  const storedIp = localStorage.getItem('SERVER_IP');
-  return storedIp ? `http://${storedIp}:8000` : 'http://127.0.0.1:8000';
+  // 1. Priority: Environment Variable (Build time)
+  if (import.meta.env.VITE_API_URL) {
+      return import.meta.env.VITE_API_URL;
+  }
+  
+  // 2. Priority: Runtime setting (for testing)
+  const storedUrl = localStorage.getItem('SERVER_URL');
+  if (storedUrl) {
+      return storedUrl.startsWith('http') ? storedUrl : `https://${storedUrl}`;
+  }
+  
+  // 3. Fallback: Localhost
+  return 'http://127.0.0.1:8000';
 };
 
 const client = axios.create({
