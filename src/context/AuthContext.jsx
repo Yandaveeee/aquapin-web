@@ -44,10 +44,13 @@ export const AuthProvider = ({ children }) => {
       return { success: true };
     } catch (error) {
       console.error("Login failed", error);
-      return { 
-        success: false, 
-        message: error.response?.data?.detail || "Login failed. Please check your credentials." 
-      };
+      let msg = "Login failed. Please check your credentials.";
+      if (error.response?.data?.detail) {
+          msg = error.response.data.detail;
+      } else if (error.message) {
+          msg = `${error.message}. (Check Console)`;
+      }
+      return { success: false, message: msg };
     }
   };
 
@@ -75,10 +78,13 @@ export const AuthProvider = ({ children }) => {
         return { success: true };
       } catch (error) {
           console.error("Registration failed", error);
-          return { 
-            success: false, 
-            message: error.response?.data?.detail || "Registration failed." 
-          };
+          let msg = "Registration failed.";
+          if (error.response?.data?.detail) {
+              msg = error.response.data.detail;
+          } else if (error.message) {
+              msg = `${error.message}. (Check Console)`;
+          }
+          return { success: false, message: msg };
       }
   };
 
