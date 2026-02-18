@@ -19,6 +19,7 @@ const getBaseUrl = () => {
 
 const client = axios.create({
   baseURL: getBaseUrl(),
+  timeout: 60000, // 1 minute timeout (for Render cold starts)
 });
 
 // Request Interceptor
