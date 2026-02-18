@@ -1,0 +1,17 @@
+# Inteillij
+.idea
+*.iml
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build
+dist
+build
+
+# Env
+.env
+.env.local
+.DS_Store
